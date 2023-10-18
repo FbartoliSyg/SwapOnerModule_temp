@@ -2,7 +2,6 @@
 pragma solidity ^0.8.20;
 
 import "@gnosis.pm/zodiac/contracts/core/Module.sol";
-import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 
 interface IOwnerManager {
     function swapOwner(
