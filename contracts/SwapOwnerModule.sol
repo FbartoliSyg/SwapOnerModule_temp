@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: UNLICENSED
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
 import "@gnosis.pm/zodiac/contracts/core/Module.sol";
@@ -9,35 +9,40 @@ interface IOwnerManager {
         address oldOwner,
         address newOwner
     ) external;
-     function getThreshold() external view returns (uint256);
 }
 
 contract SwapOwnerModule is Module {
-    constructor() {
-        _disableInitializers();
+    constructor(address target, address avatar, address owner) {
+        bytes memory initParams = abi.encode(
+            target,
+            avatar,
+            owner
+        );
+        setUp(initParams);
     }
 
-    function setUp(bytes memory initializeParams) public initializer {
-        (address avatar, address target) = abi.decode(
+    function setUp(bytes memory initializeParams) public override initializer {
+        (address target, address avatar, address owner) = abi.decode(
             initializeParams,
-            (address)
+            (address,address, address)
         );
         __Ownable_init();
         setAvatar(avatar);
         setTarget(target);
-        transferOwnership(address(0));
+        transferOwnership(owner);
     }
 
-    function startRecovery(address oldOwners, address newOwners) external {
+    function startRecovery(address oldOwners, address newOwners) external onlyOwner {
         require(_swapOwner(address(0x1), oldOwners, newOwners), 'Module transaction failed');
     }
-    
+
+
 
     function _swapOwner(
         address prevOwner,
         address oldOwner,
         address newOwner
-    ) internal return (bool) {
+    ) internal returns (bool) {
         return exec(
             avatar,
             0,
