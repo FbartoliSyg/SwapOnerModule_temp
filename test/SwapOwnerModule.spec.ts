@@ -5,11 +5,9 @@ import hre from "hardhat";
 const contracts = {
   avatar: "MockAvatar",
   swapOwnerModule: "SwapOwnerModule",
-  delay: "Delay",
+  modifier: "Delay",
 };
 
-const ZeroState =
-  "0x0000000000000000000000000000000000000000000000000000000000000000";
 const ZeroAddress = "0x0000000000000000000000000000000000000000";
 const FirstAddress = "0x0000000000000000000000000000000000000001";
 
@@ -24,7 +22,7 @@ describe("DelayModifier", async () => {
     const avatar = await Avatar.deploy();
     const avatarAddress = await avatar.address;
 
-    const Modifier = await hre.ethers.getContractFactory(contracts.delay);
+    const Modifier = await hre.ethers.getContractFactory(contracts.modifier);
     const modifier = await Modifier.deploy(
       admin.address,
       avatarAddress,
@@ -86,7 +84,6 @@ describe("DelayModifier", async () => {
         .to.be.revertedWithCustomError(module, "OwnableUnauthorizedAccount")
         .withArgs(user2.address);
     });
-
     it("throws if module not enabled by target (delay modifier)", async () => {
       const [user1, user2] = await hre.ethers.getSigners();
       const { module, modifier } = await loadFixture(setup);
@@ -96,7 +93,7 @@ describe("DelayModifier", async () => {
         .to.be.revertedWithCustomError(modifier, "NotAuthorized")
         .withArgs(module.address);
     });
-    it("calls if owner and module enabled by target (delay modifier)", async () => {
+    it("starts a recovery if owner and module enabled by target (delay modifier)", async () => {
       const [user1, user2] = await hre.ethers.getSigners();
       const { module, modifier } = await loadFixture(setup);
       await modifier.enableModule(module.address);
