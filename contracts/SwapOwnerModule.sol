@@ -38,7 +38,7 @@ contract SwapOwnerModule is Module {
         require(_owner != address(0), "Owner can not be zero address");
         avatar = _avatar;
         target = _target;
-        transferOwnership(_owner);
+        _transferOwnership(_owner);
 
         emit SwapOwnerSetup(msg.sender, _target, _avatar, _owner);
         emit AvatarSet(address(0), _avatar);

@@ -69,6 +69,18 @@ describe("DelayModifier", async () => {
         .to.emit(Module, "SwapOwnerSetup")
         .withArgs(user1.address, user1.address, user1.address);
     });
+    it("should transfer the ownership to owner address", async () => {
+      const [user1, user2] = await hre.ethers.getSigners();
+      const Module = await hre.ethers.getContractFactory(
+        contracts.swapOwnerModule
+      );
+      const module = await Module.deploy(
+        user1.address,
+        user1.address,
+        user2.address
+      );
+      expect(await module.owner()).to.be.equal(user2.address);
+    });
   });
 
   describe("startRecovery()", async () => {
