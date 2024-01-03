@@ -6,16 +6,6 @@ import "hardhat-deploy";
 import dotenv from "dotenv";
 import type { HttpNetworkUserConfig } from "hardhat/types";
 
-import yargs from "yargs";
-
-const argv = yargs
-  .option("network", {
-    type: "string",
-    default: "hardhat",
-  })
-  .help(false)
-  .version(false).argv;
-
 // Load environment variables.
 dotenv.config();
 const { INFURA_KEY, MNEMONIC, ETHERSCAN_API_KEY, PK } = process.env;
