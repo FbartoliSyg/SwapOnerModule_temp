@@ -21,11 +21,11 @@ contract SwapOwnerModule is Module {
     }
 
     function setUp(bytes memory initializeParams) public override initializer {
+        __Ownable_init(msg.sender);
         (address target, address avatar, address owner) = abi.decode(
             initializeParams,
             (address, address, address)
         );
-        __Ownable_init();
         setAvatar(avatar);
         setTarget(target);
         transferOwnership(owner);
