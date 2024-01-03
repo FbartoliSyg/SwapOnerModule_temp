@@ -21,7 +21,7 @@
     "solidity-coverage": "^0.8.5"
   },
   "overrides": {
-    "@safe-global/safe-contracts":{
+    "@safe-global/safe-contracts": {
       "ethers": "5.7.2"
     }
   },
