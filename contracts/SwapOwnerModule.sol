@@ -12,6 +12,10 @@ interface IOwnerManager {
 }
 
 contract SwapOwnerModule is Module {
+
+    /// @param _owner Address of the owner
+    /// @param _avatar Address of the avatar (e.g. a Gnosis Safe)
+    /// @param _target Address of the contract that will call exec function
     constructor(address target, address avatar, address owner) {
         bytes memory initParams = abi.encode(
             target,
@@ -32,8 +36,8 @@ contract SwapOwnerModule is Module {
         transferOwnership(owner);
     }
 
-    function startRecovery(address oldOwners, address newOwners) external onlyOwner {
-        require(_swapOwner(address(0x1), oldOwners, newOwners), 'Module transaction failed');
+    function startRecovery(address prevOwner,address oldOwners, address newOwners) external onlyOwner {
+        require(_swapOwner(prevOwner, oldOwners, newOwners), 'Module transaction failed');
     }
 
 
@@ -44,7 +48,7 @@ contract SwapOwnerModule is Module {
         address newOwner
     ) internal returns (bool) {
         return exec(
-            avatar,
+            target,
             0,
             abi.encodeCall(
                 IOwnerManager.swapOwner,
