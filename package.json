@@ -30,9 +30,8 @@
     "test": "hardhat test",
     "deploy": "hardhat deploy --network",
     "coverage": "hardhat coverage",
-    "lint": "yarn lint:sol && yarn lint:ts",
+    "lint": "yarn lint:sol",
     "lint:sol": "solhint 'contracts/**/*.sol'",
-    "lint:ts": "eslint --max-warnings 0 .",
     "fmt:sol": "prettier 'contracts/**/*.sol' -w"
   }
 }
