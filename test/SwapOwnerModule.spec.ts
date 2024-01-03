@@ -1,4 +1,4 @@
-import { loadFixture, mine } from "@nomicfoundation/hardhat-network-helpers";
+import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 import { expect } from "chai";
 import hre from "hardhat";
 
@@ -22,11 +22,11 @@ describe("DelayModifier", async () => {
 
     const Avatar = await hre.ethers.getContractFactory(contracts.avatar);
     const avatar = await Avatar.deploy();
-    const avatarAddress = await avatar.getAddress();
+    const avatarAddress = await avatar.address;
 
     const Modifier = await hre.ethers.getContractFactory(contracts.delay);
     const modifier = await Modifier.deploy(
-      avatarAddress,
+      admin.address,
       avatarAddress,
       avatarAddress,
       cooldown,
@@ -70,6 +70,39 @@ describe("DelayModifier", async () => {
       expect(await Module.deploy(user1.address, user1.address, user1.address))
         .to.emit(Module, "SwapOwnerSetup")
         .withArgs(user1.address, user1.address, user1.address);
+    });
+  });
+
+  describe("startRecovery()", async () => {
+    it("throws if not owner", async () => {
+      const [user1, user2] = await hre.ethers.getSigners();
+      const { module } = await loadFixture(setup);
+
+      await expect(
+        module
+          .connect(user2)
+          .startRecovery(FirstAddress, user1.address, user2.address)
+      )
+        .to.be.revertedWithCustomError(module, "OwnableUnauthorizedAccount")
+        .withArgs(user2.address);
+    });
+
+    it("throws if module not enabled by target (delay modifier)", async () => {
+      const [user1, user2] = await hre.ethers.getSigners();
+      const { module, modifier } = await loadFixture(setup);
+      await expect(
+        module.startRecovery(FirstAddress, user1.address, user2.address)
+      )
+        .to.be.revertedWithCustomError(modifier, "NotAuthorized")
+        .withArgs(module.address);
+    });
+    it("calls if owner and module enabled by target (delay modifier)", async () => {
+      const [user1, user2] = await hre.ethers.getSigners();
+      const { module, modifier } = await loadFixture(setup);
+      await modifier.enableModule(module.address);
+      await expect(
+        module.startRecovery(FirstAddress, user1.address, user2.address)
+      ).to.not.reverted;
     });
   });
 });

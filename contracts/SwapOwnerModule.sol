@@ -20,7 +20,7 @@ contract SwapOwnerModule is Module {
     );
 
     /// @param avatar Address of the avatar (e.g. a Gnosis Safe) Avatars must expose an interface like IAvatar.sol.
-    /// @param target Address of the contract that will call execTransactionFromModule function
+    /// @param target Address of the contract that will call execTransactionFromModule function (Delay modifier)
     /// @param owner Address of the owner
     constructor(address target, address avatar, address owner) {
         bytes memory initParams = abi.encode(target, avatar, owner);
