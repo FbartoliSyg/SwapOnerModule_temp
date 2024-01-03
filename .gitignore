@@ -10,4 +10,5 @@ deployments
 # Hardhat files
 cache
 artifacts
+build
 
