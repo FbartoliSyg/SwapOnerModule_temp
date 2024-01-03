@@ -20,6 +20,11 @@
     "solhint-plugin-prettier": "^0.0.5",
     "solidity-coverage": "^0.8.5"
   },
+  "overrides": {
+    "@safe-global/safe-contracts":{
+      "ethers": "5.7.2"
+    }
+  },
   "scripts": {
     "build": "hardhat compile",
     "test": "hardhat test",
