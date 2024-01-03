@@ -12,6 +12,13 @@ interface IOwnerManager {
 }
 
 contract SwapOwnerModule is Module {
+    event SwapOwnerSetup(
+        address indexed initiator,
+        address indexed owner,
+        address indexed avatar,
+        address target
+    );
+
     /// @param avatar Address of the avatar (e.g. a Gnosis Safe) Avatars must expose an interface like IAvatar.sol.
     /// @param target Address of the contract that will call execTransactionFromModule function
     /// @param owner Address of the owner
@@ -22,13 +29,20 @@ contract SwapOwnerModule is Module {
 
     function setUp(bytes memory initializeParams) public override initializer {
         __Ownable_init(msg.sender);
-        (address target, address avatar, address owner) = abi.decode(
+        (address _target, address _avatar, address _owner) = abi.decode(
             initializeParams,
             (address, address, address)
         );
-        setAvatar(avatar);
-        setTarget(target);
-        transferOwnership(owner);
+        require(_avatar != address(0), "Avatar can not be zero address");
+        require(_target != address(0), "Target can not be zero address");
+        require(_owner != address(0), "Owner can not be zero address");
+        avatar = _avatar;
+        target = _target;
+        transferOwnership(_owner);
+
+        emit SwapOwnerSetup(msg.sender, _target, _avatar, _owner);
+        emit AvatarSet(address(0), _avatar);
+        emit TargetSet(address(0), _target);
     }
 
     function startRecovery(
