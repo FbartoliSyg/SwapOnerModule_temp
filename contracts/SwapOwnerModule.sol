@@ -19,6 +19,11 @@ contract SwapOwnerModule is Module {
         address target
     );
 
+    event SwapOwner(
+        address indexed oldOwner,
+        address indexed newOwner
+    );
+
     /// @param avatar Address of the avatar (e.g. a Gnosis Safe) Avatars must expose an interface like IAvatar.sol.
     /// @param target Address of the contract that will call execTransactionFromModule function (Delay modifier)
     /// @param owner Address of the owner
@@ -47,13 +52,14 @@ contract SwapOwnerModule is Module {
 
     function startRecovery(
         address prevOwner,
-        address oldOwners,
-        address newOwners
+        address oldOwner,
+        address newOwner
     ) external onlyOwner {
         require(
-            _swapOwner(prevOwner, oldOwners, newOwners),
+            _swapOwner(prevOwner, oldOwner, newOwner),
             "Module transaction failed"
         );
+        emit SwapOwner(oldOwner, newOwner);
     }
 
     function _swapOwner(
