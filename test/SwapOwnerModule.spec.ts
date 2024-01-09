@@ -113,5 +113,16 @@ describe("DelayModifier", async () => {
         module.startRecovery(FirstAddress, user1.address, user2.address)
       ).to.not.reverted;
     });
+
+    it("should emit event in case of successful recovery queuing", async () => {
+      const [user1, user2] = await hre.ethers.getSigners();
+      const { module, modifier } = await loadFixture(setup);
+      await modifier.enableModule(module.address);
+      await expect(
+        module.startRecovery(FirstAddress, user1.address, user2.address)
+      )
+        .to.emit(module, "SwapOwner")
+        .withArgs(user1.address, user2.address);
+    });
   });
 });
