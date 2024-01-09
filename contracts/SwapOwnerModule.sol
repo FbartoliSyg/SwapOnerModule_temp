@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.20;
+pragma solidity ^0.8.18;
 
 import {Module, Enum} from "@gnosis.pm/zodiac/contracts/core/Module.sol";
 
@@ -24,11 +24,11 @@ contract SwapOwnerModule is Module {
         address indexed newOwner
     );
 
-    /// @param avatar Address of the avatar (e.g. a Gnosis Safe) Avatars must expose an interface like IAvatar.sol.
-    /// @param target Address of the contract that will call execTransactionFromModule function (Delay modifier)
-    /// @param owner Address of the owner
-    constructor(address target, address avatar, address owner) {
-        bytes memory initParams = abi.encode(target, avatar, owner);
+    /// @param _avatar Address of the avatar (e.g. a Gnosis Safe) Avatars must expose an interface like IAvatar.sol.
+    /// @param _target Address of the contract that will call execTransactionFromModule function (Delay modifier)
+    /// @param _owner Address of the owner
+    constructor(address _target, address _avatar, address _owner) {
+        bytes memory initParams = abi.encode(_target, _avatar, _owner);
         setUp(initParams);
     }
 
