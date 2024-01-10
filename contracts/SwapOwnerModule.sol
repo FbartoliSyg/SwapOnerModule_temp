@@ -31,6 +31,8 @@ contract SwapOwnerModule is Module {
         setUp(initParams);
     }
 
+    /// @notice Public setup function to allow deployment via factory / proxy pattern
+    /// @param initializeParams ABI encoded parameters (see constructor)
     function setUp(bytes memory initializeParams) public override initializer {
         __Ownable_init(msg.sender);
         (address _target, address _avatar, address _owner) = abi.decode(
