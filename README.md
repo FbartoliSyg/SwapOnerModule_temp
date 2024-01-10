@@ -22,8 +22,6 @@ Module is only able to swap the keys (not to add nor execute any other transacti
 
 Customer(s) is/are notified about any recovery step
 
-Potential solution: Moralis Streams API - Moralis Web3 | Enterprise-Grade Web3 APIs
-
 Safe{Wallet} must be inactive for a certain time period (off-chain)
 
 Swap can be executed only after a certain time period (on-chain)
