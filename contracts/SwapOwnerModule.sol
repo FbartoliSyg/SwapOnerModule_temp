@@ -52,6 +52,7 @@ contract SwapOwnerModule is Module {
     /**
      * @notice Craft a payload that will call the function swapOwner in the Safe contract which replaces the owner `oldOwner` in the Safe with `newOwner`.
      * @dev This can only be done via a Safe transaction.
+     * @dev Validation is done
      * @dev https://github.com/safe-global/safe-contracts/blob/0acdd35a203299585438f53885df630f9d486a86/contracts/base/OwnerManager.sol#L99
      * @param prevOwner Owner that pointed to the owner to be replaced in the linked list
      * @param oldOwner Owner address to be replaced.
