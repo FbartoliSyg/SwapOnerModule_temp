@@ -85,9 +85,12 @@ Assets: the digital assets in the Safe{Wallet}
 Safe{Wallet} Recovery Module: A backup of a Safe{Wallet} on Sygnum Guardianship
 
 ### Zodiac standards
-Quote take from the [Zodiac wiki page](https://zodiac.wiki/index.php/Introduction:_Zodiac_Standard)
+Quote taken from the [Zodiac wiki page](https://zodiac.wiki/index.php/Introduction:_Zodiac_Standard)
 
 >Avatars are programmable Ethereum accounts, like the Safe. Avatars are the address that holds balances, owns systems, executes transaction; is referenced externally; and ultimately represents your DAO. Avatars must expose an interface like IAvatar.sol.
+>
 >Modules are contracts enabled by an Avatar that implement some decision making logic. They should import Module.sol.
+>
 >Modifiers are contracts that sit between Modules and Avatars to modify the Module's behavior. For example, they might enforce a delay on all functions a Module attempts to execute. Modifiers should import Modifier.sol and must expose an interface like IAvatar.sol.
+>
 >Guards are contracts that can be enabled on Modules and implement pre- or post-checks on each transaction that the Module executes. This allows Avatars to do things like limit the scope of addresses and functions that a module can call or ensure a certain state is never changed by a module. Guards should import BaseGuard.sol.
