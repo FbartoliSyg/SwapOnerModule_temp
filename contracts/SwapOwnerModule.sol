@@ -23,7 +23,6 @@ contract SwapOwnerModule is Module {
         address indexed oldOwner,
         address indexed newOwner
     );
-
     /// @param _avatar Address of the avatar (e.g. a Gnosis Safe) Avatars must expose an interface like IAvatar.sol.
     /// @param _target Address of the contract that will call execTransactionFromModule function (Delay modifier)
     /// @param _owner Address of the owner
