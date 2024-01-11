@@ -5,7 +5,7 @@ Solidity contracts for SyGuard
 
 ## Introduction
 
-Sygnum Bank, in partnership with Safe, plans to develop Sygnum Guardian - a tailored recovery service offering for Safe Smart Accounts (Safe — Leading the Smart Account standard on Ethereum ). Leveraging their programmability, Sygnum will create a recovery module that enables account owners (and only them) to recover access to their Safe accounts by swapping their keys with new ones created by them.
+Sygnum Bank, in partnership with Safe, plans to develop Sygnum Guardian - a tailored recovery service offering for Safe Smart Accounts (Safe — Leading the Smart Account standard on Ethereum ). Leveraging their programmability, Sygnum will create a recovery module that enables account owners (and only them) to request a recovery to their Safe accounts by swapping their keys with new ones.
 
 Sygnum has implemented a simple SwapOwnerModule, which empowers the operator to execute only Safe owner address swap transactions. All other "Safe transaction" can not be executed (e.g. transfer of assets). The SwapOwnerModule makes use of the Zodiac Delay Modifier to delay an owner swap such that a swap can get executed only after a certain time period after initialization (e.g. 7 days)
 
@@ -18,7 +18,7 @@ Sygnum has implemented a simple SwapOwnerModule, which empowers the operator to 
 Contract 1: SwapOwnerModule.sol
 
 ## Transparency & Limitation of Power
-Module is only able to swap the keys (not to add nor execute any other transaction)
+Module is only able to swap the keys (not tov add nor execute any other transaction)
 
 Customer(s) is/are notified about any recovery step
 
